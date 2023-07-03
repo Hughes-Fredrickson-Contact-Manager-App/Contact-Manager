@@ -1,3 +1,5 @@
+package WholePackage;
+
 import java.util.Scanner;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,6 +9,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashMap;
 
 
 public class ContactManager {
@@ -20,19 +23,20 @@ public class ContactManager {
         System.out.println("Enter an option (1-5) then press Enter:");
 
         String userInput = scanner.next();
-        if (userInput.equals("1")) {
-            System.out.println("Open contacts");
-        } else if (userInput.equals("2")) {
-            System.out.println("Add contact Method");
-        } else if (userInput.equals("3")) {
-            System.out.println("Search Contact Method");
-        } else if (userInput.equals("4")) {
-            System.out.println("Delete contact method");
-        } else if (userInput.equals("5")) {
-            System.out.println("Exit");
+        switch (userInput) {
+            case "1" -> {
+                System.out.println("Here is a list of our contacts: \n");
+                System.out.format("%-15s | %-15s%n", "Name", "Phone number");
+                System.out.println("---------------------------");
+                System.out.format("%-15s | %-15s%n", "Jack Blank", "210-567-8923");
+                System.out.format("%-15s | %-15s%n", "Jane Doe", "789-8902");
+                System.out.format("%-15s | %-15s%n", "Sam Space", "210-581-8123");;
+            }
+            case "2" -> System.out.println("Add contact Method");
+            case "3" -> System.out.println("Search Contact Method");
+            case "4" -> System.out.println("Delete contact method");
+            case "5" -> System.out.println("Exit");
         }
-        String name;
-        String phoneNumber;
 
         String directory = "data";
         String filename = "Contacts.txt";
