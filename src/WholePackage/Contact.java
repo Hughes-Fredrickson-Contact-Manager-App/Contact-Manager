@@ -20,4 +20,15 @@ public class Contact {
     }
 
 
+    public static class ContactList {
+        public static boolean list() {
+            System.out.format("%-15s | %-15s%n", "Name", "Phone number");
+            System.out.println("---------------------------");
+            System.out.format("%-15s | %-15s%n", "Jack Blank", "210-567-8923");
+            System.out.format("%-15s | %-15s%n", "Jane Doe", "789-8902");
+            System.out.format("%-15s | %-15s%n", "Sam Space", "210-581-8123");
+            return false;
+        }
+    }
+
 }

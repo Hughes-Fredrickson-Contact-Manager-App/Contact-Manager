@@ -26,17 +26,16 @@ public class ContactManager {
         switch (userInput) {
             case "1" -> {
                 System.out.println("Here is a list of our contacts: \n");
-                System.out.format("%-15s | %-15s%n", "Name", "Phone number");
-                System.out.println("---------------------------");
-                System.out.format("%-15s | %-15s%n", "Jack Blank", "210-567-8923");
-                System.out.format("%-15s | %-15s%n", "Jane Doe", "789-8902");
-                System.out.format("%-15s | %-15s%n", "Sam Space", "210-581-8123");;
+                {
+                System.out.println(Contact.ContactList.list());}
             }
             case "2" -> System.out.println("Add contact Method");
             case "3" -> System.out.println("Search Contact Method");
             case "4" -> System.out.println("Delete contact method");
             case "5" -> System.out.println("Exit");
         }
+        String name;
+        String phoneNumber;
 
         String directory = "data";
         String filename = "Contacts.txt";
