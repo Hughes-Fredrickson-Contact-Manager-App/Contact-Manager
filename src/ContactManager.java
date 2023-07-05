@@ -60,7 +60,7 @@ public class ContactManager {
                 Path contactPath = Paths.get("data", "Contacts.txt");
                 List<String> contactListFromFile = Files.readAllLines(contactPath);
                 for (int i = 0; i < contactListFromFile.size(); i += 1) {
-                    System.out.println((i + 1) + ": " + contactListFromFile.get(i));
+                    System.out.println(contactListFromFile.get(i));
                 }
                 List<String> lines = Files.readAllLines(Paths.get("data", "Contacts.txt"));
             }
@@ -70,15 +70,33 @@ public class ContactManager {
                 System.out.println("What is your Contacts phone number?");
                 newContact.phoneNumber = scanner.next();
 
-
-
                 Files.write(
                         Paths.get("data", "Contacts.txt"),
-                        Arrays.asList(String.format("%-15s | %-15s%n", newContact.name, newContact.phoneNumber)), // list with one item
+                        Arrays.asList(String.format("%-15s | %-15s%n", newContact.name, newContact.phoneNumber)),
                         StandardOpenOption.APPEND
                 );
             }
-            case "3" -> System.out.println("Search Contact Method");
+            case "3" -> {
+                System.out.println("Enter the Contact you're looking for:");
+                Path contactPath = Paths.get("data", "Contacts.txt");
+                List<String> contactListFromFile = Files.readAllLines(contactPath);
+
+                String name = scanner.next();
+
+                try {
+                    scanner = new Scanner(contactPath).useDelimiter(",");
+
+                    while (scanner.hasNext()) {
+                        final String lineFromFile = scanner.nextLine();
+                        if (lineFromFile.contains(name)) {
+                            System.out.println(lineFromFile);
+                            break;
+                        }
+                    }
+                } catch (IOException e) {
+                    System.out.println(" cannot write to file " + contactPath);
+                }
+            }
             case "4" -> System.out.println("Delete contact method");
             case "5" -> {
                 System.out.println("Thank you and have a great day!");
