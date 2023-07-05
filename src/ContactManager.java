@@ -1,15 +1,9 @@
-package WholePackage;
 
 import java.util.Scanner;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.HashMap;
 
 
 public class ContactManager {
@@ -24,11 +18,7 @@ public class ContactManager {
 
         String userInput = scanner.next();
         switch (userInput) {
-            case "1" -> {
-                System.out.println("Here is a list of our contacts: \n");
-                {
-                System.out.println(Contact.ContactList.list());}
-            }
+            case "1" -> System.out.println("Here is a list of our contacts: \n");
             case "2" -> System.out.println("Add contact Method");
             case "3" -> System.out.println("Search Contact Method");
             case "4" -> System.out.println("Delete contact method");
