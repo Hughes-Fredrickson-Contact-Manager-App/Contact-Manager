@@ -1,17 +1,19 @@
 
-import java.util.Scanner;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 
 public class ContactManager {
-    public static void main(String[] args) throws IOException {
 
-        Contact newContact = new Contact();
-
-        Scanner scanner = new Scanner(System.in);
+    static void menu() {
         System.out.println("1. View contacts.");
         System.out.println("2. Add a new contact.");
         System.out.println("3. Search a contact by name.");
@@ -19,15 +21,10 @@ public class ContactManager {
         System.out.println("5. Exit.");
         System.out.println("Enter an option (1-5) then press Enter:");
 
-        String userInput = scanner.next();
-        String contactName = scanner.next();
-        switch (userInput) {
-            case "1" -> System.out.println("Here is a list of our contacts: \n");
-            case "2" -> System.out.println("Add contact Method");
-            case "3" -> System.out.println("Search Contact Method");
-            case "4" -> System.out.println("Delete contact method");
-            case "5" -> System.out.println("Exit");
-        }
+
+    };
+
+    public static void main(String[] args) throws IOException {
 
         String directory = "data";
         String filename = "Contacts.txt";
@@ -46,5 +43,38 @@ public class ContactManager {
         if (! Files.exists(dataFile)) {
             Files.createFile(dataFile);
         }
+
+        menu();
+
+        Contact newContact = new Contact();
+
+
+
+
+        Scanner scanner = new Scanner(System.in);
+        String userInput = scanner.next();
+        switch (userInput) {
+            case "1" -> System.out.println("Here is a list of our contacts: \n");
+            case "2" -> {
+
+                System.out.println("What is your Contacts name?");
+                newContact.name = scanner.next();
+                System.out.println(newContact.name);System.out.println("What is your Contacts phone number?");
+                newContact.phoneNumber = scanner.next();
+                System.out.println(newContact.phoneNumber);
+
+                List<? extends Serializable> contactInfo = List.of(newContact.name + " | " + newContact.phoneNumber + " | ");
+
+                Path filepath = Paths.get("data", "Contacts.txt");
+
+                Files.write(filepath, (Iterable<? extends CharSequence>) contactInfo);
+                menu();
+            }
+            case "3" -> System.out.println("Search Contact Method");
+            case "4" -> System.out.println("Delete contact method");
+            case "5" -> System.out.println("Exit");
+        }
+
+
     }
 }
