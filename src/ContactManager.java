@@ -75,19 +75,21 @@ public class ContactManager {
             }
         }
 
-        if (! Files.exists(dataFile)) {
+        if (!Files.exists(dataFile)) {
             Files.createFile(dataFile);
         }
+        boolean response = true;
+        while (response) {
+            menu();
+            break;
+        }
 
-        menu();
-
-        Contact newContact = new Contact();
-
-
+        Contact contact = new Contact();
 
 
         Scanner scanner = new Scanner(System.in);
         String userInput = scanner.next();
+
 
 
         switch (userInput) {
@@ -99,16 +101,18 @@ public class ContactManager {
                     System.out.println(contactListFromFile.get(i));
                 }
                 List<String> lines = Files.readAllLines(Paths.get("data", "Contacts.txt"));
+                menu();
             }
+
             case "2" -> {
                 System.out.println("What is your Contacts name?");
-                newContact.name = scanner.next();
+                contact.name = scanner.next();
                 System.out.println("What is your Contacts phone number?");
-                newContact.phoneNumber = scanner.next();
+                contact.phoneNumber = scanner.next();
 
                 Files.write(
                         Paths.get("data", "Contacts.txt"),
-                        Collections.singletonList(String.format("%-15s | %-15s%n", newContact.name, newContact.phoneNumber)),
+                        Collections.singletonList(String.format("%-15s | %-15s%n", contact.name, contact.phoneNumber)),
                         StandardOpenOption.APPEND
                 );
             }
@@ -138,6 +142,8 @@ public class ContactManager {
                 System.out.println("Who would you like to delete from your contacts?");
                 String deletedContact = scanner.next();
                 deleteContact(deletedContact);
+                System.out.println("Do you wish to continue? y/n \n");
+                String confirm = scanner.next();
             }
             case "5" -> {
                 System.out.println("Thank you and have a great day!");
