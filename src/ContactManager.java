@@ -1,14 +1,9 @@
-
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class ContactManager {
@@ -22,7 +17,46 @@ public class ContactManager {
         System.out.println("Enter an option (1-5) then press Enter:");
 
 
-    };
+    }
+
+    static void createTempFile() throws IOException {
+        try {
+            String directory = "data";
+            String tempFile = "Temp.txt";
+            Path tempDataFile = Paths.get(directory, tempFile);
+
+            Files.createFile(tempDataFile);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    static void deleteContact(String ContactName) throws IOException {
+        try {
+
+
+            Path contactPath = Paths.get("data", "Contacts.txt");
+            Path tempPath = Paths.get("data", "Temp.txt");
+            List<String> contactListFromFile = Files.readAllLines(contactPath);
+            for (int i = 0; i < contactListFromFile.size(); i += 1) {
+                if (!contactListFromFile.get(i).contains(ContactName)){
+                Files.write(
+                        tempPath,
+                        Collections.singletonList(String.format(contactListFromFile.get(i))),
+                        StandardOpenOption.APPEND
+                );
+
+            }}
+            Files.delete(contactPath);
+            Files.move(tempPath, tempPath.resolveSibling("Contacts.txt"));
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void main(String[] args) throws IOException {
 
@@ -31,6 +65,7 @@ public class ContactManager {
 
         Path dataDirectory = Paths.get(directory);
         Path dataFile = Paths.get(directory, filename);
+
 
         if (Files.notExists(dataDirectory)) {
             try {
@@ -60,6 +95,7 @@ public class ContactManager {
                 Path contactPath = Paths.get("data", "Contacts.txt");
                 List<String> contactListFromFile = Files.readAllLines(contactPath);
                 for (int i = 0; i < contactListFromFile.size(); i += 1) {
+
                     System.out.println(contactListFromFile.get(i));
                 }
                 List<String> lines = Files.readAllLines(Paths.get("data", "Contacts.txt"));
@@ -72,7 +108,7 @@ public class ContactManager {
 
                 Files.write(
                         Paths.get("data", "Contacts.txt"),
-                        Arrays.asList(String.format("%-15s | %-15s%n", newContact.name, newContact.phoneNumber)),
+                        Collections.singletonList(String.format("%-15s | %-15s%n", newContact.name, newContact.phoneNumber)),
                         StandardOpenOption.APPEND
                 );
             }
@@ -97,7 +133,12 @@ public class ContactManager {
                     System.out.println(" cannot write to file " + contactPath);
                 }
             }
-            case "4" -> System.out.println("Delete contact method");
+            case "4" -> {
+                createTempFile();
+                System.out.println("Who would you like to delete from your contacts?");
+                String deletedContact = scanner.next();
+                deleteContact(deletedContact);
+            }
             case "5" -> {
                 System.out.println("Thank you and have a great day!");
                 System.exit(0);
