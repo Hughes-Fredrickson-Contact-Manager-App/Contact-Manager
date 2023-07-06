@@ -14,25 +14,11 @@ public class ContactManager {
     public static void main(String[] args) throws IOException {
     	
     	
-        String directory = "data";
-        String filename = "Contacts.txt";
-
-        Path dataDirectory = Paths.get(directory);
-        Path dataFile = Paths.get(directory, filename);
-
-
-        if (Files.notExists(dataDirectory)) {
-            try {
-                Files.createDirectories(dataDirectory);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        if (!Files.exists(dataFile)) {
-            Files.createFile(dataFile);
-        }
-      
+//    	Create data directory and Contacts.txt if user does not have one
+    
+        contact.createFileAndDir();
+        
+//      Main logic to run program - continuously displays menu until user types anything other than 1-4
        
         String userInput = "0";
         	

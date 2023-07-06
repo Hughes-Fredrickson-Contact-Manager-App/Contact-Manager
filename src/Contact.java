@@ -12,6 +12,8 @@ public class Contact {
     String name;
     String phoneNumber;
     
+//    Menu Method
+    
    public void menu() {
     	 System.out.println("1. View contacts.");
          System.out.println("2. Add a new contact.");
@@ -23,6 +25,30 @@ public class Contact {
 
     }
    
+   public void createFileAndDir() throws IOException {
+		
+       String directory = "data";
+       String filename = "Contacts.txt";
+
+       Path dataDirectory = Paths.get(directory);
+       Path dataFile = Paths.get(directory, filename);
+
+
+       if (Files.notExists(dataDirectory)) {
+           try {
+               Files.createDirectories(dataDirectory);
+           } catch (IOException e) {
+               throw new RuntimeException(e);
+           }
+       }
+
+       if (!Files.exists(dataFile)) {
+           Files.createFile(dataFile);
+       }
+   }
+   
+//   Show Contact List Method
+   
    public void showContacts() throws IOException {
 	   Path contactPath = Paths.get("data", "Contacts.txt");
        List<String> contactListFromFile = Files.readAllLines(contactPath);
@@ -32,6 +58,8 @@ public class Contact {
        }
    }
    
+//   Add Contact to list Method
+   
    public void addContact() throws IOException {
 	   System.out.println("What is your Contacts name?");
        name = scanner.next();
@@ -40,10 +68,12 @@ public class Contact {
 
        Files.write(
                Paths.get("data", "Contacts.txt"),
-               Collections.singletonList(String.format("%-15s | %-15s%n", name, phoneNumber)),
+               Collections.singletonList(String.format("%-15s | %-15s%", name, phoneNumber)),
                StandardOpenOption.APPEND
        );
    }
+   
+//   Search for Contact by name Method
    
    public void searchContact() throws IOException{
 	   System.out.println("Enter the Contact you're looking for:");
@@ -67,6 +97,8 @@ public class Contact {
        }
    }
    
+//   Create Temporary .txt file
+   
    public void createTempFile() throws IOException {
        try {
            String directory = "data";
@@ -81,6 +113,8 @@ public class Contact {
 
    }
 
+//   Replace and rename Contact.txt w/ Temp.txt without Contact to delete
+   
    public void deleteContact(String ContactName) throws IOException {
        try {
 
